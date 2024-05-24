@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MongoDB.Bson;
 using System.Threading.Tasks;
 
 namespace Middleware;
@@ -16,17 +15,7 @@ public class JwtMiddleware(IJwtBuilder jwtBuilder) : IMiddleware
         {
             // Verify the token using the IJwtBuilder
             var userId = jwtBuilder.ValidateToken(token);
-
-            if (ObjectId.TryParse(userId, out _))
-            {
-                // Store the userId in the HttpContext items for later use
-                context.Items["userId"] = userId;
-            }
-            else
-            {
-                // If token or userId are invalid, send 401 Unauthorized status
-                context.Response.StatusCode = 401;
-            }
+            context.Items["userId"] = userId;
         }
 
         // Continue processing the request

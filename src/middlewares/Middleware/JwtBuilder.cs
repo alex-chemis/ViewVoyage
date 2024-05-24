@@ -12,13 +12,14 @@ public class JwtBuilder(IOptions<JwtOptions> options) : IJwtBuilder
 {
     private readonly JwtOptions _options = options.Value;
 
-    public string GetToken(string userId)
+    public string GetToken(string email, bool isAdmin)
     {
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Secret));
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
         var claims = new[]
         {
-            new Claim("userId", userId)
+            new Claim("userEmail", email),
+            new Claim("userIsAdmin", isAdmin.ToString())
         };
         var expirationDate = DateTime.Now.AddMinutes(_options.ExpiryMinutes);
         var jwt = new JwtSecurityToken(claims: claims, signingCredentials: signingCredentials, expires: expirationDate);
@@ -27,30 +28,33 @@ public class JwtBuilder(IOptions<JwtOptions> options) : IJwtBuilder
         return encodedJwt;
     }
 
-    public string ValidateToken(string token)
+    public (string, bool) ValidateToken(string token)
     {
         var principal = GetPrincipal(token);
         if (principal == null)
         {
-            return string.Empty;
+            return (string.Empty, false);
         }
 
         ClaimsIdentity identity;
-        try
+
+        if (principal.Identity == null)
         {
-            identity = (ClaimsIdentity)principal.Identity;
+            return (string.Empty, false);
         }
-        catch (NullReferenceException)
+
+        identity = (ClaimsIdentity)principal.Identity;
+
+        var userEmailClaim = identity.FindFirst("userEmail");
+        var userIsAdminClaim = identity.FindFirst("userIsAdmin");
+        if (userEmailClaim == null || userIsAdminClaim == null)
         {
-            return string.Empty;
+            return (string.Empty, false);
         }
-        var userIdClaim = identity?.FindFirst("userId");
-        if (userIdClaim == null)
-        {
-            return string.Empty;
-        }
-        var userId = userIdClaim.Value;
-        return userId;
+        
+        var userEmail = userEmailClaim.Value;
+        var userIsAdmin = bool.Parse(userIsAdminClaim.Value);
+        return (userEmail, userIsAdmin);
     }
 
     private ClaimsPrincipal GetPrincipal(string token)
