@@ -1,0 +1,6 @@
+@LoaderMicroservice_HostAddress = http://localhost:5064
+
+GET {{LoaderMicroservice_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
