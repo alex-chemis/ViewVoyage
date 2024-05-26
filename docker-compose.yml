@@ -1,6 +1,13 @@
 version: '3.8'
 
 services:
+  s3api:
+    build:
+      context: .
+      dockerfile: src/microservices/S3ApiMicroservice/Dockerfile
+    ports:
+      - 44320:80
+
   postgres:
     image: postgres:16-alpine
     ports:
@@ -45,3 +52,12 @@ services:
       - player
     ports:
       - 44328:80
+
+  client:
+    build:
+      context: .
+      dockerfile: src/uis/client/Dockerfile
+    depends_on:
+      - api-gateway
+    ports:
+      - 44329:3000

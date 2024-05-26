@@ -9,7 +9,7 @@ namespace S3ApiMicroservice.Controllers;
 [ApiController]
 public class PlayerController(IAmazonS3 s3Client) : ControllerBase
 {
-    [HttpGet("{bucketName}/{key}")]
+    [HttpGet("play/{bucketName}/{key}")]
     public async Task<IActionResult> Play(string bucketName, string key)
     {
         var bucketExists = await Amazon.S3.Util.AmazonS3Util.DoesS3BucketExistV2Async(s3Client, bucketName);
