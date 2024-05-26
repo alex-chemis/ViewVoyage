@@ -21,5 +21,5 @@ public class User
     public bool? SubscriptionStatus { get; set; }
     public DateTime? SubscriptionStartDate { get; set; }
     public DateTime? SubscriptionEndDate { get; set; }
-    public Subscription? SubscriptionType { get; set; }
+    public virtual Subscription? SubscriptionType { get; set; }
 }

@@ -10,4 +10,16 @@ public class ContentDbContext(DbContextOptions<ContentDbContext> options) : DbCo
     public DbSet<CastMember> CastMembers => Set<CastMember>();
     public DbSet<Episode> Episodes => Set<Episode>();
     public DbSet<User> Users => Set<User>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.HasPostgresExtension("uuid-ossp");
+        modelBuilder.HasAnnotation("Npgsql:PostgresExtension:uuid-ossp", ",,");
+        modelBuilder.Entity<Content>().Property(x => x.Id).HasDefaultValueSql("gen_random_uuid()");
+        modelBuilder.Entity<CastMember>().Property(x => x.Id).HasDefaultValueSql("gen_random_uuid()");
+        modelBuilder.Entity<Episode>().Property(x => x.Id).HasDefaultValueSql("gen_random_uuid()");
+        modelBuilder.Entity<User>().Property(x => x.Id).HasDefaultValueSql("gen_random_uuid()");
+    }
 }

@@ -8,8 +8,8 @@ public class CastMember
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public BigInteger Id { get; set; }
+    public Guid Id { get; set; }
     public string EmployeeFullName { get; set; } = null!;
     public string RoleName { get; set; } = null!;
-    public Content Content { get; set; } = null!;
+    public virtual Content Content { get; set; } = null!;
 }

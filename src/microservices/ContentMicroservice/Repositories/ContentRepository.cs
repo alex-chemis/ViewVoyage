@@ -1,5 +1,6 @@
 using ContentMicroservice.Data;
 using ContentMicroservice.Dtos.Content;
+using ContentMicroservice.Dtos.Episode;
 using ContentMicroservice.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ public class ContentRepository(ContentDbContext dbContext) : IContentRepository
 
         foreach (var content in contentList)
         {
-            contentDtoList.Add(ContentToContentDto(content));
+            contentDtoList.Add(ContentDto.FromContent(content));
         }
 
         return contentDtoList;
@@ -33,7 +34,7 @@ public class ContentRepository(ContentDbContext dbContext) : IContentRepository
             return null;
         }
 
-        return ContentToContentDto(content);
+        return ContentDto.FromContent(content);
     }
         
 
@@ -68,7 +69,7 @@ public class ContentRepository(ContentDbContext dbContext) : IContentRepository
         await _contents.AddAsync(content);
         await dbContext.SaveChangesAsync();
 
-        return ContentToContentDto(content);
+        return ContentDto.FromContent(content);
     }
 
     public async Task<ContentDto?> UpdateContent(Guid id, UpdateContentDto updateContentDto)
@@ -91,10 +92,10 @@ public class ContentRepository(ContentDbContext dbContext) : IContentRepository
 
         if (updateContentDto.CastMembers is not null)
         {
-            content.CastMembers.Clear();
+            dbContext.RemoveRange(await dbContext.CastMembers.Where(s => s.Content.Id == content.Id).ToListAsync());
             foreach (var castMember in updateContentDto.CastMembers)
             {
-                content.CastMembers.Add(new CastMember{
+                await dbContext.CastMembers.AddAsync(new CastMember{
                     EmployeeFullName = castMember.EmployeeFullName,
                     RoleName = castMember.RoleName,
                     Content = content
@@ -102,7 +103,9 @@ public class ContentRepository(ContentDbContext dbContext) : IContentRepository
             }
         }
 
-        return ContentToContentDto(content);
+        await dbContext.SaveChangesAsync();
+
+        return ContentDto.FromContent(content);
     }
 
     public async Task<bool> DeleteContent(Guid id)
@@ -111,6 +114,7 @@ public class ContentRepository(ContentDbContext dbContext) : IContentRepository
         if (oldContent is not null)
         {
             dbContext.Remove(oldContent);
+            await dbContext.SaveChangesAsync();
             return true;
         }
         else
@@ -119,29 +123,23 @@ public class ContentRepository(ContentDbContext dbContext) : IContentRepository
         }
     }
 
-    ContentDto ContentToContentDto(Content content)
+    public async Task<IList<EpisodeDto>?> GetEpisodes(Guid id)
     {
-        var contentDto = new ContentDto{
-            Title = content.Title,
-            Quality = content.Quality,
-            Genre = content.Genre,
-            Category = content.Category,
-            AgeRestriction = content.AgeRestriction,
-            Description = content.Description,
-            Thumbnail = content.Thumbnail,
-            CreatedDate = content.CreatedDate,
-            RemainingTime = content.RemainingTime
-        };
+        var content = await _contents.FirstOrDefaultAsync(c => c.Id == id);
 
-        foreach (var castMember in content.CastMembers)
+        if (content is null)
         {
-            contentDto.CastMembers.Add(new CastMemberDto{
-                EmployeeFullName = castMember.EmployeeFullName,
-                RoleName = castMember.RoleName
-            });
+            return null;
+        }
+        
+        var episodeList =  await dbContext.Episodes.Where(e => e.Content.Id == id).ToListAsync();
+        var episodeDtoList = new List<EpisodeDto>();
+
+        foreach (var episode in episodeList)
+        {
+            episodeDtoList.Add(EpisodeDto.FromEpisode(episode));
         }
 
-        return contentDto;
+        return episodeDtoList;
     }
-
 }

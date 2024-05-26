@@ -66,4 +66,18 @@ public class ContentController(IContentRepository contentRepository) : Controlle
 
         return NoContent();
     }
+
+    [HttpGet("{id}/episode")]
+    [Authorize]
+    public async Task<IActionResult> GetEpisodes(Guid id)
+    {
+        var episodes = await contentRepository.GetEpisodes(id);
+
+        if (episodes is null)
+        {
+            return NotFound($"Content with ID:{id} not found");
+        }
+
+        return Ok(episodes);
+    }
 }

@@ -7,5 +7,5 @@ public class Episode
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
     public string? S3BucketName { get; set; }
-    public Content Content { get; set; } = null!;
+    public virtual Content Content { get; set; } = null!;
 }

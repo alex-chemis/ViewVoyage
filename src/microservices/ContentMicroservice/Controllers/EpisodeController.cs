@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContentMicroservice.Controllers;
 
-
 [Route("api/v1/[controller]")]
 [ApiController]
 public class EpisodeController(IEpisodeRepository episodeRepository) : ControllerBase

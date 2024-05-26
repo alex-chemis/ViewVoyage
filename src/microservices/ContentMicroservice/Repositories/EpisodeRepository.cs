@@ -17,7 +17,7 @@ public class EpisodeRepository(ContentDbContext dbContext) : IEpisodeRepository
 
         foreach (var episode in episodeList)
         {
-            episodeDtoList.Add(EpisodeToEpisodeDto(episode));
+            episodeDtoList.Add(EpisodeDto.FromEpisode(episode));
         }
 
         return episodeDtoList;
@@ -32,7 +32,7 @@ public class EpisodeRepository(ContentDbContext dbContext) : IEpisodeRepository
             return null;
         }
 
-        return EpisodeToEpisodeDto(episode);
+        return EpisodeDto.FromEpisode(episode);
     }
 
     public async Task<EpisodeDto?> CreateEpisode(CreateEpisodeDto createEpisodeDto)
@@ -55,7 +55,7 @@ public class EpisodeRepository(ContentDbContext dbContext) : IEpisodeRepository
         await _episodes.AddAsync(episode);
         await dbContext.SaveChangesAsync();
 
-        return EpisodeToEpisodeDto(episode);
+        return EpisodeDto.FromEpisode(episode);
     }
 
     public async Task<EpisodeDto?> UpdateEpisode(Guid id, UpdateEpisodeDto updateEpisodeDto)
@@ -77,7 +77,9 @@ public class EpisodeRepository(ContentDbContext dbContext) : IEpisodeRepository
             episode.Content = await dbContext.Contents.FirstOrDefaultAsync(c => c.Id == updateEpisodeDto.ContentId) ?? episode.Content;
         }
 
-        return EpisodeToEpisodeDto(episode);
+        await dbContext.SaveChangesAsync();
+
+        return EpisodeDto.FromEpisode(episode);
     }
 
     public async Task<bool> DeleteEpisode(Guid id)
@@ -86,6 +88,7 @@ public class EpisodeRepository(ContentDbContext dbContext) : IEpisodeRepository
         if (oldEpisode is not null)
         {
             dbContext.Remove(oldEpisode);
+            await dbContext.SaveChangesAsync();
             return true;
         }
         else
@@ -94,12 +97,5 @@ public class EpisodeRepository(ContentDbContext dbContext) : IEpisodeRepository
         }
     }
 
-    EpisodeDto EpisodeToEpisodeDto(Episode episode) =>
-        new EpisodeDto{
-            Number = episode.Number,
-            Title = episode.Title,
-            Description = episode.Description,
-            S3BucketName = episode.S3BucketName,
-            ContentId = episode.Content.Id
-        };
+    
 }

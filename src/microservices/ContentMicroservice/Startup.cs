@@ -22,11 +22,11 @@ public class Startup(IConfiguration configuration)
         services.AddJwtAuthentication(Configuration); // JWT Configuration
 
         services.AddDbContext<ContentDbContext>(o =>
-            o.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+            o.UseLazyLoadingProxies().UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
         );
 
-        services.AddSingleton<IContentRepository>();
-        services.AddSingleton<IEpisodeRepository>();
+        services.AddScoped<IContentRepository, ContentRepository>();
+        services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 
         services.AddSwaggerGen(c =>
         {
@@ -66,6 +66,7 @@ public class Startup(IConfiguration configuration)
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
         {
             scope.ServiceProvider.GetService<ContentDbContext>()?.Database.Migrate();
