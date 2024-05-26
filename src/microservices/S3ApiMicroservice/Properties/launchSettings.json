@@ -1,11 +1,11 @@
 ﻿{
   "profiles": {
-    "ContentMicroservice": {
+    "AuthMicroservice": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:44388"
+      "applicationUrl": "http://localhost:44400"
     },
     "Docker": {
       "commandName": "Docker",
@@ -19,7 +19,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:44388",
+      "applicationUrl": "http://localhost:44400",
       "sslPort": 0
     }
   }
