@@ -1,6 +1,0 @@
-@PlayerMicroservice_HostAddress = http://localhost:5106
-
-GET {{PlayerMicroservice_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
