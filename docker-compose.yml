@@ -1,9 +1,29 @@
 version: '3.8'
 
 services:
-  s3api:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "27001:5432"
+    environment:
+      POSTGRES_DB: "auth"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+
+  auth:
     build:
       context: .
-      dockerfile: src/microservices/S3ApiMicroservice/Dockerfile
+      dockerfile: src/microservices/AuthMicroservice/Dockerfile
+    depends_on:
+      - postgres
     ports:
-      - 44329:80
+      - 44327:80
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: src/gateways/AuthGateway/Dockerfile
+    depends_on:
+      - auth
+    ports:
+      - 44326:80
