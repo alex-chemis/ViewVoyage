@@ -4,9 +4,9 @@ import ReactPlayer from 'react-player';
 import 'shaka-player/dist/controls.css';
 import './styles.css'; // Import your CSS file
 
-const VideoPlayer = ({ mpdUrl }) => {
+const VideoPlayer = () => {
     const [hlsUrl, setHlsUrl] = useState(
-        "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+        "http://localhost:44328/api/v1/play/nature-stream/nature.mpd"
       );
 
       return (
