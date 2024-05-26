@@ -26,6 +26,7 @@ public class Startup(IConfiguration configuration)
         );
 
         services.AddSingleton<IContentRepository>();
+        services.AddSingleton<IEpisodeRepository>();
 
         services.AddSwaggerGen(c =>
         {

@@ -1,3 +1,4 @@
+using ContentMicroservice.Dtos.Content;
 using ContentMicroservice.Models;
 using ContentMicroservice.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -5,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContentMicroservice.Controllers;
 
-[ApiController]
+
 [Route("api/v1/[controller]")]
+[ApiController]
 public class ContentController(IContentRepository contentRepository) : ControllerBase
 {
     [HttpGet]
@@ -32,20 +34,18 @@ public class ContentController(IContentRepository contentRepository) : Controlle
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> Create(Content content)
+    public async Task<IActionResult> Create([FromBody] CreateContentDto content)
     {
         return Ok(await contentRepository.CreateContent(content));
     }
 
     [HttpPut("{id}")]
     [Authorize]
-    public async Task<IActionResult> Update(Guid id, Content content)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateContentDto content)
     {
-        content.Id = id;
+        var newContent = await contentRepository.UpdateContent(id, content);
 
-        var newContent = await contentRepository.UpdateContent(content);
-
-        if (content is null)
+        if (newContent is null)
         {
             return NotFound($"Content with ID:{id} not found");
         }

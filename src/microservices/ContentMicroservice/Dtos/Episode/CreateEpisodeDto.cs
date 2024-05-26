@@ -1,8 +1,7 @@
-namespace ContentMicroservice.Dtos;
+namespace ContentMicroservice.Dtos.Episode;
 
-public class EpisodeDto
+public class CreateEpisodeDto
 {
-    public Guid Id { get; set; }
     public int Number { get; set; }
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
