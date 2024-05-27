@@ -4,7 +4,7 @@ import VideoPlayer from '../components/VideoPlayer';
 
 const Home = () => {
   return    <div>
-                <VideoPlayer></VideoPlayer>
+                <VideoPlayer hlsUrl={`http://localhost:44328/api/v1/play/nature-stream/nature.mpd`}></VideoPlayer>
             </div>;
 };
 
