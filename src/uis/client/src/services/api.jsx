@@ -51,3 +51,17 @@ export const getFilmDetails = async (id, token) => {
     throw error;
   }
 };
+
+export const getEpisodesForFilm = async (id, token) => {
+  try {
+    const response = await api.get(`/content/${id}/episode`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching episodes for film', error);
+    throw error;
+  }
+};
