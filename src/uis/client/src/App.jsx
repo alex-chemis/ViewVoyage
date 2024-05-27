@@ -6,16 +6,19 @@ import Home from './pages/Home';
 import Films from './pages/Films';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
     <Router>
       <Navigation />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/films" element={<Films />} />
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/films" element={<Films />} />
+        </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

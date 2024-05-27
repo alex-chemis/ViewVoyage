@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await loginService(email, password);
-      login(data.token); // Save token in context
+      login(data); // Save token in context
       setError('');
       console.log('Login successful', data);
     } catch (error) {
