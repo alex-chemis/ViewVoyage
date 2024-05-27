@@ -1,37 +1,42 @@
-// src/pages/Films.js
+// Films.js
 import React, { useEffect, useState, useContext } from 'react';
-import { getFilms } from '../services/api';
-import { AuthContext } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
+import { getFilms, getFilmDetails } from '../services/api';
+import './Films.css'; // Import the CSS file
 
 const Films = () => {
+  const { token } = useContext(AuthContext);
   const [films, setFilms] = useState([]);
-  const { auth } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchFilms = async () => {
       try {
-        const data = await getFilms(auth);
+        const data = await getFilms(token);
         setFilms(data);
       } catch (error) {
         console.error('Failed to fetch films', error);
       }
     };
 
-    if (auth) {
+    if (token) {
       fetchFilms();
     }
-  }, [auth]);
+  }, [token]);
 
   return (
-    <div>
-      <h1>Films Page</h1>
-      <ul>
-        {films.map(film => (
-          <li key={film.id}>{film.title}</li>
-        ))}
-      </ul>
+    <div className="film-list">
+      {films.map((film) => (
+        <Link key={film.id} to={`/films/${film.id}`} className="film-link">
+          <div className="film-panel">
+            <h2>{film.title}</h2>
+            <p>{film.description}</p>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 };
+
 
 export default Films;

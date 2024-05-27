@@ -1,51 +1,29 @@
 // src/components/Navigation.js
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-const NavBar = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: #333;
-  color: white;
-  width: 100%;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-`;
-
-const NavLinks = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-const NavLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const SiteName = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
+import AuthContext from '../context/AuthContext';
 
 const Navigation = () => {
+  const { token, logout } = useContext(AuthContext);
+
   return (
-    <NavBar>
-      <SiteName>My Site</SiteName>
-      <NavLinks>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/films">Films</NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </NavLinks>
-    </NavBar>
+    <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', backgroundColor: '#333', color: 'white' }}>
+      <div>
+        <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Site Name</Link>
+      </div>
+      <div>
+        <Link to="/" style={{ color: 'white', marginRight: '10px' }}>Home</Link>
+        <Link to="/films" style={{ color: 'white', marginRight: '10px' }}>Films</Link>
+        {token ? (
+          <button onClick={logout} style={{ color: 'white', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>Logout</button>
+        ) : (
+          <>
+            <Link to="/login" style={{ color: 'white', marginRight: '10px' }}>Login</Link>
+            <Link to="/register" style={{ color: 'white' }}>Signup</Link>
+          </>
+        )}
+      </div>
+    </nav>
   );
 };
 

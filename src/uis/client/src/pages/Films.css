@@ -1,0 +1,23 @@
+/* films.css */
+.film-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .film-panel {
+    background-color: #f3f3f3; /* Light gray background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #000; /* Black text color */
+  }
+  
+  .film-panel h2 {
+    margin-bottom: 10px;
+  }
+  
+  .film-panel p {
+    color: #000; /* Black text color */
+  }
+  

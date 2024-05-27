@@ -1,24 +1,40 @@
-// src/context/AuthContext.js
-import React, { createContext, useState } from 'react';
+// src/AuthContext.js
+import React, { createContext, useState, useEffect } from 'react';
+import { login as loginUser } from '../services/api';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(localStorage.getItem('authToken'));
+export const AuthProvider = ({ children, navigate }) => {
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
 
-  const login = (token) => {
-    setAuth(token);
-    localStorage.setItem('authToken', token);
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+    } else {
+      localStorage.removeItem('token');
+    }
+  }, [token]);
+
+  const login = async (email, password) => {
+    try {
+      const data = await loginUser(email, password);
+      setToken(data);
+      navigate('/');
+    } catch (error) {
+      console.error('Login failed', error);
+    }
   };
 
   const logout = () => {
-    setAuth(null);
-    localStorage.removeItem('authToken');
+    setToken(null);
+    navigate('/login');
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthContext;

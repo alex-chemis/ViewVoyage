@@ -37,3 +37,17 @@ export const login = async (email, password) => {
     throw error;
   }
 };
+
+export const getFilmDetails = async (id, token) => {
+  try {
+    const response = await api.get(`/content/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching film details', error);
+    throw error;
+  }
+};
