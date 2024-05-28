@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContentMicroservice.Controllers;
 
 
-[Route("api/v1/[controller]")]
+[Route("api/v1/content")]
 [ApiController]
 public class ContentController(IContentRepository contentRepository) : ControllerBase
 {
@@ -53,7 +53,7 @@ public class ContentController(IContentRepository contentRepository) : Controlle
         return Ok(newContent);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     [Authorize]
     public async Task<IActionResult> Delete(Guid id)
     {

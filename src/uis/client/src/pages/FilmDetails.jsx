@@ -62,7 +62,7 @@ const FilmDetails = () => {
       <p>Category: {film.category}</p>
       <p>Age Restriction: {film.ageRestriction}</p>
       <p>Description: {film.description}</p>
-      <img src={film.thumbnail} alt="Thumbnail" />
+      <img src={`http://localhost:44328/api/v1/films-imgs/${film.thumbnail}` } alt="Thumbnail" />
       <p>Created Date: {film.createdDate}</p>
       <p>Remaining Time: {film.remainingTime}</p>
       <h3>Cast Members:</h3>
@@ -78,7 +78,7 @@ const FilmDetails = () => {
           <h3>{episodes[0].title}</h3>
           <p>Description: {episodes[0].description}</p>
           <div>
-            <VideoPlayer hlsUrl={`http://localhost:44328/api/v1/play/${episodes[0].s3BucketName}/nature.mpd`}></VideoPlayer>
+            <VideoPlayer hlsUrl={`http://localhost:44328/api/v1/play/${episodes[0].s3BucketName}/master.m3u8`}></VideoPlayer>
           </div>
         </div>
       ) : (
@@ -97,7 +97,7 @@ const FilmDetails = () => {
               <h3>{selectedEpisode.title}</h3>
               <p>Description: {selectedEpisode.description}</p>
               <div>
-                <VideoPlayer hlsUrl={`http://localhost:44328/api/v1/play/${selectedEpisode.s3BucketName}/nature.mpd`}></VideoPlayer>
+                <VideoPlayer hlsUrl={`http://localhost:44328/api/v1/play/${selectedEpisode.s3BucketName}/master.m3u8`}></VideoPlayer>
               </div>
             </div>
           )}
