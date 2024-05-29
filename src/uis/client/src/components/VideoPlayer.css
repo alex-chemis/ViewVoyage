@@ -1,0 +1,10 @@
+.player {
+    border: 2px solid white;
+    object-fit: cover;
+    padding: 0;
+    margin: 0;
+}
+
+.video-player {
+    position: relative;
+}

@@ -1,23 +1,49 @@
-/* films.css */
-.film-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  
-  .film-panel {
-    background-color: #f3f3f3; /* Light gray background */
+/* Films.css */
+.films {
+    color: white;
+    margin-left: 20px;
+    padding-top: 90px;
+}
+
+.genre-section {
+    display: flex;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    color: #000; /* Black text color */
-  }
-  
-  .film-panel h2 {
-    margin-bottom: 10px;
-  }
-  
-  .film-panel p {
-    color: #000; /* Black text color */
-  }
-  
+}
+
+.genre-section::-webkit-scrollbar {
+    display: none;
+}
+
+.films-list {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    gap: 10px;
+}
+
+.film-card {
+    max-height: 260px;
+    object-fit: contain;
+    margin-right: 10px;
+    transition: transform 450ms; /* Adjust based on desired card width */
+}
+
+.film-card img {
+    max-height: 200px;
+    object-fit: contain;
+    margin-right: 10px;
+    transition: transform 450ms;
+}
+
+.film-card:hover {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+.film-card-content {
+    display: flex;
+    color: white;
+    text-decoration: none;
+    justify-content: center;
+    flex-direction: column;
+}

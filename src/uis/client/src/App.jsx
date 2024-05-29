@@ -1,5 +1,5 @@
 // src/App.js
-import React from 'react';
+import React, {Profiler} from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Home from './pages/Home';
@@ -9,23 +9,35 @@ import Register from './pages/Register';
 import FilmDetails from './pages/FilmDetails';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import './App.css'
+import Profile from "./pages/Profile.jsx";
+import SignInScreen from "./pages/SignInScreen.jsx";
+
+
+function SignUpScreen() {
+  return null;
+}
 
 const App = () => {
   return (
-    <Router>
-      <AuthWrapper>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/films" element={<Films />} />
-            <Route path="/films/:id" element={<FilmDetails />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </AuthWrapper>
-    </Router>
+      <div className="app">
+        <Router>
+          <AuthWrapper>
+            <Routes>
+              <Route path="/" element={<ProtectedRoute />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/films" element={<Films />} />
+                <Route path="/films/:id" element={<FilmDetails />} />
+              </Route>
+              <Route path="/profile" element={<Profile />}/>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signIn" element={<SignInScreen />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </AuthWrapper>
+        </Router>
+      </div>
   );
 };
 
