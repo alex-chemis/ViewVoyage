@@ -1,13 +1,12 @@
-FROM node:18-alpine
+FROM node:16
 
 WORKDIR /app
 
-COPY /src/uis/Client/package.json .
+COPY /src/uis/client/package.json .
+COPY /src/uis/client .
 
 RUN npm install
 
-COPY /src/uis/Client .
+EXPOSE 5173
 
-EXPOSE 3030
-
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--host"]

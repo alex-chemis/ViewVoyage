@@ -37,7 +37,7 @@ const Films = () => {
         <div>
             <Navigation />
             <div className="films">
-                {Object.keys(filmsByGenre).map((genre) => (
+                {Object.keys(filmsByGenre).sort((a, b) => (a.genre > b.genre) ? 1 : -1).map((genre) => (
                     <div>
                         <h1>{genre}</h1>
                         <div key={genre}>

@@ -1,6 +1,7 @@
 // FilmDetails.js
 import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
+import { format } from "date-fns";
 import { useParams } from 'react-router-dom';
 import { getFilmDetails, getEpisodesForFilm } from '../services/api'; // Assuming you have a service function to fetch film details
 import VideoPlayer from '../components/VideoPlayer';
@@ -80,19 +81,17 @@ const FilmDetails = () => {
                             <p>Genre</p>
                             <p>Category</p>
                             <p>Age Restriction</p>
-                            <p>Created Date</p>
-                            <p>Remaining Time</p>
+                            <p>Premiere</p>
                         </div>
                         <div className="response">
                             <p>{film.quality}</p>
                             <p>{film.genre}</p>
                             <p>{film.category}</p>
                             <p>{film.ageRestriction}</p>
-                            <p>{film.createdDate}</p>
-                            <p>{film.remainingTime}</p>
+                            <p>{format(film.remainingTime, "MMMM do, yyyy")}</p>
                         </div>
                         <div className="cast-members">
-                            <h3>Cast Members ></h3>
+                            <h3>Cast Members &gt;</h3>
                             <ul>
                                 {film.castMembers.map((member, index) => (
                                     <li key={index}>
@@ -108,7 +107,7 @@ const FilmDetails = () => {
                 {episodes.length === 1 ? (
                     <div>
                         <h3>{episodes[0].title}</h3>
-                        <p>Description: {episodes[0].description}</p>
+                        <p>{episodes[0].description}</p>
                         <div className="player">
                             <VideoPlayer
                                 hlsUrl={`http://localhost:44328/api/v1/play/${episodes[0].s3BucketName}/master.m3u8`}>
@@ -132,7 +131,7 @@ const FilmDetails = () => {
                         {selectedEpisode && (
                             <div>
                                 <h3>{selectedEpisode.title}</h3>
-                                <p>Description: {selectedEpisode.description}</p>
+                                <p>{selectedEpisode.description}</p>
                                 <div className="player">
                                     <VideoPlayer
                                         hlsUrl={`http://localhost:44328/api/v1/play/${selectedEpisode.s3BucketName}/master.m3u8`}>
