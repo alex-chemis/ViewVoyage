@@ -52,12 +52,3 @@ services:
       - player
     ports:
       - 44328:80
-
-  client:
-    build:
-      context: .
-      dockerfile: src/uis/client/Dockerfile
-    depends_on:
-      - api-gateway
-    ports:
-      - 44329:3000

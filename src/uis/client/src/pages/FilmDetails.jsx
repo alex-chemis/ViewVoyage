@@ -4,6 +4,8 @@ import AuthContext from '../context/AuthContext';
 import { useParams } from 'react-router-dom';
 import { getFilmDetails, getEpisodesForFilm } from '../services/api'; // Assuming you have a service function to fetch film details
 import VideoPlayer from '../components/VideoPlayer';
+import Navigation from "../components/Navigation.jsx";
+import './FilmDetail.css'
 
 const FilmDetails = () => {
   const { id } = useParams();
@@ -56,54 +58,88 @@ const FilmDetails = () => {
 
   return (
     <div>
-      <h2>{film.title}</h2>
-      <p>Quality: {film.quality}</p>
-      <p>Genre: {film.genre}</p>
-      <p>Category: {film.category}</p>
-      <p>Age Restriction: {film.ageRestriction}</p>
-      <p>Description: {film.description}</p>
-      <img src={`http://localhost:44328/api/v1/films-imgs/${film.thumbnail}` } alt="Thumbnail" />
-      <p>Created Date: {film.createdDate}</p>
-      <p>Remaining Time: {film.remainingTime}</p>
-      <h3>Cast Members:</h3>
-      <ul>
-        {film.castMembers.map((member, index) => (
-          <li key={index}>
-            {member.employeeFullName} - {member.roleName}
-          </li>
-        ))}
-      </ul>
-      {episodes.length === 1 ? (
-        <div>
-          <h3>{episodes[0].title}</h3>
-          <p>Description: {episodes[0].description}</p>
-          <div>
-            <VideoPlayer hlsUrl={`http://localhost:44328/api/v1/play/${episodes[0].s3BucketName}/master.m3u8`}></VideoPlayer>
-          </div>
-        </div>
-      ) : (
-        <div>
-          <h3>Select Episode:</h3>
-          <select onChange={handleEpisodeChange}>
-            <option value="">Select an Episode</option>
-            {episodes.map((episode) => (
-              <option key={episode.id} value={episode.id}>
-                {episode.title}
-              </option>
-            ))}
-          </select>
-          {selectedEpisode && (
-            <div>
-              <h3>{selectedEpisode.title}</h3>
-              <p>Description: {selectedEpisode.description}</p>
-              <div>
-                <VideoPlayer hlsUrl={`http://localhost:44328/api/v1/play/${selectedEpisode.s3BucketName}/master.m3u8`}></VideoPlayer>
-              </div>
+        <Navigation />
+        <div className="film-content">
+            <div className="film-container-info">
+                <div className="film-poster">
+                    <img
+                        src={`http://localhost:44328/api/v1/play/films-imgs/${film.thumbnail}`}
+                        alt="Thumbnail"
+                    />
+                </div>
+                <div className="film-info">
+                    <div className="description">
+                        <h1>{film.title}</h1>
+                        <p>{film.description}</p>
+                    </div>
+                    <h2>About the film</h2>
+                    <div className="about-container">
+                        <div className="answer">
+                            <p>Quality</p>
+                            <p>Genre</p>
+                            <p>Category</p>
+                            <p>Age Restriction</p>
+                            <p>Created Date</p>
+                            <p>Remaining Time</p>
+                        </div>
+                        <div className="response">
+                            <p>{film.quality}</p>
+                            <p>{film.genre}</p>
+                            <p>{film.category}</p>
+                            <p>{film.ageRestriction}</p>
+                            <p>{film.createdDate}</p>
+                            <p>{film.remainingTime}</p>
+                        </div>
+                        <div className="cast-members">
+                            <h3>Cast Members ></h3>
+                            <ul>
+                                {film.castMembers.map((member, index) => (
+                                    <li key={index}>
+                                        {member.employeeFullName} - {member.roleName}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-          )}
+            <div className="film-watch">
+                {episodes.length === 1 ? (
+                    <div>
+                        <h3>{episodes[0].title}</h3>
+                        <p>Description: {episodes[0].description}</p>
+                        <div className="player">
+                            <VideoPlayer
+                                hlsUrl={`http://localhost:44328/api/v1/play/${episodes[0].s3BucketName}/master.m3u8`}>
+                            </VideoPlayer>
+                        </div>
+                    </div>
+                ) : (
+                    <div>
+                        <h3>Select Episode:</h3>
+                        <select onChange={handleEpisodeChange}>
+                            <option value="">Select an Episode</option>
+                            {episodes.map((episode) => (
+                                <option key={episode.id} value={episode.id}>
+                                    {episode.title}
+                                </option>
+                            ))}
+                        </select>
+                        {selectedEpisode && (
+                            <div>
+                                <h3>{selectedEpisode.title}</h3>
+                                <p>Description: {selectedEpisode.description}</p>
+                                <div className="player">
+                                    <VideoPlayer
+                                        hlsUrl={`http://localhost:44328/api/v1/play/${selectedEpisode.s3BucketName}/master.m3u8`}>
+                                    </VideoPlayer>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
-      )}
-      
     </div>
   );
 };

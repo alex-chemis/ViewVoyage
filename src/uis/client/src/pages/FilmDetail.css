@@ -1,0 +1,78 @@
+.film-content {
+    color: white;
+    padding-top: 120px;
+    padding-bottom: 300px;
+}
+
+.film-poster img {
+    left: 40px;
+    width: 350px;
+}
+
+.film-info {
+    font-family: Graphik Kinopoisk LC Web,Tahoma,Arial,Verdana,sans-serif;
+}
+
+.film-info h1 {
+    font-size: 30px;
+}
+
+.film-container-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 7%;
+}
+
+.about-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+}
+
+.info-box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding-block-start: 8px;
+    padding-block-end: 8px;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: row;
+}
+
+.answer p {
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.response p {
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.response {
+    max-width: 50%;
+}
+
+.cast-members h3 {
+    font-size: 16px;
+}
+
+.cast-members {
+    white-space: nowrap;
+}
+
+.film-watch {
+    display: flex;
+    justify-content: center;
+    padding-top: 180px;
+}
+
+.player {
+    border: 10px solid black;
+}
