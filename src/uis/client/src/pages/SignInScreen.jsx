@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import './SignInScreen.css'
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import AuthContext from "../context/AuthContext.jsx";
 
 function SignInScreen() {
@@ -22,11 +22,14 @@ function SignInScreen() {
     return (
         <div className="signInScreen">
             <div className="signInNav">
-                <img
-                    className="signInScreenLogo"
-                    src="../../public/images/vv_logo_red.png"
-                    alt=""
-                />
+                <Link to="/login">
+                    <img
+                        className="signInScreenLogo"
+                        src="../../public/images/vv_logo_red.png"
+                        alt=""
+                    />
+                </Link>
+
             </div>
             <div className="body">
                 <form onSubmit={handleLogin}>

@@ -2,12 +2,7 @@
 .films {
     color: white;
     margin-left: 20px;
-    padding-top: 90px;
-}
-
-.genre-section {
-    display: flex;
-    padding: 20px;
+    padding-top: 80px;
 }
 
 .genre-section::-webkit-scrollbar {
@@ -17,12 +12,14 @@
 .films-list {
     display: flex;
     overflow-y: hidden;
-    overflow-x: scroll;
+    overflow-x: auto;
     gap: 10px;
+    padding-left: 20px;
 }
 
 .film-card {
-    max-height: 260px;
+    max-height: 240px;
+    padding-bottom: 25px;
     object-fit: contain;
     margin-right: 10px;
     transition: transform 450ms; /* Adjust based on desired card width */

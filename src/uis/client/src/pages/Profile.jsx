@@ -9,11 +9,9 @@ function Profile() {
     return <div className="profile">
         <Navigation />
         <div className="profile-body">
-            <h1>Profile Info</h1>
             <div className="profile-info">
                 <img src="../../public/images/netflix_avatar.png" alt=""/>
                 <div className="profile-details">
-                    <h2>User email</h2>
                     <button className="sign-out" onClick={logout}>Sign Out</button>
                 </div>
             </div>

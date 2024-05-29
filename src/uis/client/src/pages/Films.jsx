@@ -36,26 +36,28 @@ const Films = () => {
     return (
         <div>
             <Navigation />
-            {Object.keys(filmsByGenre).map((genre) => (
-                <div className="films">
-                    <h1>{genre}</h1>
-                    <div key={genre} className="genre-section">
-                        <div className="films-list">
-                            {filmsByGenre[genre].map((film) => (
-                                <div key={film.id} className="film-card">
-                                    <Link className="film-card-content" to={`/films/${film.id}`}>
-                                        <img
-                                            src={`http://localhost:44328/api/v1/play/films-imgs/${film.thumbnail}`}
-                                            alt="Thumbnail"
-                                        />
-                                        <p>{film.title}</p>
-                                    </Link>
-                                </div>
-                            ))}
+            <div className="films">
+                {Object.keys(filmsByGenre).map((genre) => (
+                    <div>
+                        <h1>{genre}</h1>
+                        <div key={genre}>
+                            <div className="films-list">
+                                {filmsByGenre[genre].map((film) => (
+                                    <div key={film.id} className="film-card">
+                                        <Link className="film-card-content" to={`/films/${film.id}`}>
+                                            <img
+                                                src={`http://localhost:44328/api/v1/play/films-imgs/${film.thumbnail}`}
+                                                alt="Thumbnail"
+                                            />
+                                            <p>{film.title}</p>
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
 };

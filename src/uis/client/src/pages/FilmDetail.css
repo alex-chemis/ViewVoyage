@@ -2,19 +2,38 @@
     color: white;
     padding-top: 120px;
     padding-bottom: 300px;
+    font-family: Graphik Kinopoisk LC Web,Tahoma,Arial,Verdana,sans-serif;
 }
 
 .film-poster img {
     left: 40px;
     width: 350px;
+    padding-top: 10px;
 }
 
 .film-info {
-    font-family: Graphik Kinopoisk LC Web,Tahoma,Arial,Verdana,sans-serif;
+    max-width: 50%;
 }
 
-.film-info h1 {
-    font-size: 30px;
+.description {
+    padding-bottom: 40px;
+}
+
+.description h1 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 48px;
+}
+
+.description p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.gray-color {
+    color: hsla(0,0%,100%,.6);
+    line-height: 20px;
 }
 
 .film-container-info {
@@ -47,24 +66,48 @@
 
 .answer p {
     white-space: nowrap;
+    color: hsla(0,0%,100%,.6);
+    font-size: 15px;
     line-height: 20px;
 }
+
 
 .response p {
     white-space: nowrap;
+    max-width: 50%;
+    font-size: 15px;
     line-height: 20px;
 }
 
-.response {
-    max-width: 50%;
+.film-info h2 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 28px;
 }
 
 .cast-members h3 {
     font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
 }
 
 .cast-members {
     white-space: nowrap;
+}
+
+.cast-members ul {
+    margin-block-start: 0;
+    margin-block-end: 12px;
+    padding-inline-start: 0;
+    line-height: normal;
+}
+
+.cast-members li {
+    list-style-type: none;
+    font-size: 15px;
+    text-decoration: none;
+    line-height: 2;
+    word-break: break-word;
 }
 
 .film-watch {
@@ -75,4 +118,38 @@
 
 .player {
     border: 10px solid black;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 300px;
+    background-color: lightsteelblue;
+    margin: 20px 0;
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+.select-wrapper:hover {
+    box-shadow: 0px 0px 3px gray;
+}
+
+.select-wrapper select {
+    width: 300px;
+    height: 28px;
+    padding: 0 20px 0 7px;
+    background: transparent;
+    border: 0;
+    appearance: none;            /* remove arrow        */
+    -webkit-appearance: none;    /* remove arrow Chrome */
+    -moz-appearance: none;       /* remove arrow FF     */
+}
+.select-wrapper select::-ms-expand{
+    display: none;             /* remove arrow IE     */
+}
+
+.select-arrow {
+    position: absolute;
+    border: 8px solid transparent;
+    border-bottom: 0;
+    right: 6px;
 }

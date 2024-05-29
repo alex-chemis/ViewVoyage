@@ -70,6 +70,7 @@ const FilmDetails = () => {
                 <div className="film-info">
                     <div className="description">
                         <h1>{film.title}</h1>
+                        <p className="gray-color">{film.ageRestriction}</p>
                         <p>{film.description}</p>
                     </div>
                     <h2>About the film</h2>
@@ -117,14 +118,17 @@ const FilmDetails = () => {
                 ) : (
                     <div>
                         <h3>Select Episode:</h3>
-                        <select onChange={handleEpisodeChange}>
-                            <option value="">Select an Episode</option>
-                            {episodes.map((episode) => (
-                                <option key={episode.id} value={episode.id}>
-                                    {episode.title}
-                                </option>
-                            ))}
-                        </select>
+                        <div className="select-wrapper">
+                            <select onChange={handleEpisodeChange}>
+                                <option value="">Select an Episode</option>
+                                {episodes.map((episode) => (
+                                    <option key={episode.id} value={episode.id}>
+                                        {episode.title}
+                                    </option>
+                                ))}
+                                <div className="select-arrow"></div>
+                            </select>
+                        </div>
                         {selectedEpisode && (
                             <div>
                                 <h3>{selectedEpisode.title}</h3>
