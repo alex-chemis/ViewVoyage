@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { register } from '../services/api';
 import './Register.css'
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -21,11 +21,13 @@ const Register = () => {
 
     return <div className="signUpScreen">
         <div className="signInNav">
-            <img
-                className="signInScreenLogo"
-                src="../../public/images/vv_logo_red.png"
-                alt=""
-            />
+            <Link to="/login">
+                <img
+                    className="signInScreenLogo"
+                    src="../../public/images/vv_logo_red.png"
+                    alt=""
+                />
+            </Link>
             <button onClick={() => navigate("/signIn")} className="signUpScreenButton">
                 Sign In
             </button>
